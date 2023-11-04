@@ -11,33 +11,18 @@
 // }
 
 import axios from "axios";
-//import getAccessToken, { clientID } from "./services/igdb-api-auth";
+import getAccessToken from "./get-access-token";
 
+// store in ENV variables later
 const clientID = "h1xgwhjvma1rvd46q2qwphbozrm58u"; 
-const clientSecret = "eorcmduiaee82df9u8uhzfyuobczzb";
-
-let accessToken = null;
-let tokenExpiryTime = 0;
-
-const getAccessToken = async () => {
-
-    if (!accessToken || Date.now() >= tokenExpiryTime) {
-    const res = await axios.post(`https://id.twitch.tv/oauth2/token?client_id=${clientID}&client_secret=${clientSecret}&grant_type=client_credentials`);
-     
-
-        accessToken = res.data.access_token;
-
-        tokenExpiryTime = res.data.expires_in * 1000;
-    }
-    
-return accessToken; // valid for 60 days
-}
 
 const FetchGameRecs = async(req, res) => {
   try {
       // need access token to make requests
       const token = await getAccessToken();
       const tokenType = `Bearer ${token}`;
+
+      console.log(token);
 
 
       const headers = {
@@ -55,11 +40,11 @@ const FetchGameRecs = async(req, res) => {
 
       let games = [...response.data];
 
-      //console.log(response.data)
+      console.log(response.data)
 
       //console.log(games.length);
 
-      console.log(games)
+      //console.log(games)
 
       // let genres;
       // games.forEach(function (game) {
