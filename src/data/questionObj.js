@@ -2,11 +2,24 @@ export const getQuestions = {
   questionsArr: [
     {
       question: "What platforms do you enjoy playing on the  most?",
+      imgSrc: "/images/switches_image.jpg",
       options: [
-        "PC",
-        "Sony Consoles",
-        "Microsoft Consoles",
-        "Nintendo Consoles",
+        { name: "PC", id: [4], imgSrc: "/images/pc_image.png" },
+        {
+          name: "Sony ConsolesPC",
+          id: ["8", "10", "12", "234"],
+          imgSrc: "/images/sony_image.jpg",
+        },
+        {
+          imgSrc: "/images/xbox_image_2.png",
+          name: "Microsoft Consoles",
+          id: ["2", "13", "12", "234"],
+        },
+        {
+          imgSrc: "/images/nintendo_image.jpg",
+          name: "Nintendo Consoles",
+          id: ["9", "16", "12", "234"],
+        },
       ],
       /*need an array of primary keys for each console to create object key
       val pairs of name and keys

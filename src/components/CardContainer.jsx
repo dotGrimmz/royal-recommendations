@@ -1,17 +1,28 @@
-export const CardContainer = () => {
+export const CardContainer = ({ options, question, cb, imgSrc }) => {
+  console.log({ imgSrc });
   return (
-    <div className="card w-96 bg-base-100 shadow-xl image-full">
+    <div className="card min-w-[40vw] min-h-[400px] bg-base-100 shadow-xl image-full">
       <figure>
-        <img
-          src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-          alt="Shoes"
-        />
+        <img alt="Shoes" src={imgSrc} />
       </figure>
-      <div className="card-body">
-        <h2 className="card-title">Shoes!</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div className="card-actions justify-end">
-          <button className="btn btn-primary">Buy Now</button>
+      <div className="card-body gap-16">
+        <h2 className="card-title text-white">{question}</h2>
+        <div className="grid grid-cols-2 gap-16">
+          {options?.map((data) => {
+            const { name, id, imgSrc: img } = data;
+            return (
+              <button
+                key={name}
+                style={{
+                  backgroundImage: `url(${img})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+                onClick={() => cb(id)}
+                className="btn btn-primary min-h-[60px] bg-opacity-[.20] text-blue-500 text-2xl "
+              ></button>
+            );
+          })}
         </div>
       </div>
     </div>
