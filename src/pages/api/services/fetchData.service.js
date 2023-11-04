@@ -152,15 +152,19 @@ const fetchReleaseDate = async() => {
     }
 }
 
+// we don't need game names here
+
 const fetchGameName = async () => {
 
     // build up the query string based on these fields
     // extracting ids into easily searchable format for the query string
     // format: (1, 2, 3, 4, ...)
-    const genres = await fetchGenres();
-    const platforms = await fetchPlatforms();
-    const multiPlayers = await fetchMultiPlayerMode();
-    const ageRating = await fetchAgeRatings();
+    //const genres = await fetchGenres();
+    //const platforms = await fetchPlatforms();
+    //const multiPlayers = await fetchMultiPlayerMode();
+    //const ageRating = await fetchAgeRatings();
+
+    const [genres, platforms, multiPlayers, ageRating] = await Promise.all([fetchGenres(), fetchPlatforms(), fetchMultiPlayerMode(), fetchAgeRatings()]);
     //const releaseDate = await fetchReleaseDate();
 
     let genreIds = "(";
@@ -200,16 +204,27 @@ const fetchGameName = async () => {
 
     const response = await callIGDB(url, query);
 
-    const res = [...response];
+    //const res = [...response];
     //console.log("response: " + JSON.stringify(response));
     //console.log(res);
 
-    return res;
+    return response;
 }
 
 
   const buildGameObj = async () => {
-    return await Promise.all([fetchGenres(), fetchPlatforms(), fetchMultiPlayerMode(), fetchGameName()]);
+    const [genres, platforms, multiPlayers, ageRating] = await Promise.all([fetchGenres(), fetchPlatforms(), fetchMultiPlayerMode(), fetchAgeRatings()]);
+
+    return {
+        genres: genres,
+        platforms: platforms,
+        multiPlayers: multiPlayers,
+        ageRating: ageRating
+    };
+
+    //return await Promise.all([fetchGenres(), fetchPlatforms(), fetchMultiPlayerMode(), fetchGameName(), fetchAgeRatings()]);
+
+
 
     //build the object based on each index of result
   };
