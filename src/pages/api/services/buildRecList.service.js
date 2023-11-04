@@ -39,7 +39,7 @@ const buildGameRecList = async () => {
     }
 
     const url = "https://api.igdb.com/v4/games/"
-    const query = `fields name; where genres.id = ${genreIds} & platforms.id = ${platformIds} & game_modes = ${multiPlayers.id} & release_dates.y >= ${releaseDate[0]} & release_dates.y < ${releaseDate[1]}; sort release_dates.y asc; limit 10;`;
+    const query = `fields name; where genres.id = ${genreIds} & platforms.id = ${platformIds} & game_modes = ${multiPlayers.id} & release_dates.y >= ${releaseDate[0]} & release_dates.y <= ${releaseDate[1]}; sort release_dates.y asc; limit 10;`;
 
     const response = await callIGDB(url, query);
 
