@@ -1,7 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getQuestions } from "@/data/questionObj";
+import axios from "axios";
+
+let testing = true;
 export const useQuestions = () => {
-  const [responseObj, setResponseObj] = useState({
-    // shape should be according to the questions we get from the data file
-  });
-  return {};
+  const [questions, setQuestions] = useState();
+
+  const [response, setResponse] = useState([
+    {
+      questionOne: [],
+    },
+  ]);
+  const questionData = getQuestions;
+
+  const handleResponse = ({ name, newVal }) => {
+    // needs to take in prop name
+    // and newValueObj
+    setResponse((prev) => {
+      return {
+        ...prev,
+      };
+    });
+  };
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      if (testing) return setQuestions(questionData);
+      await axios
+        .get("/api/hello")
+        .then(setQuestions)
+        .catch((e) => console.error(e));
+    };
+    fetchQuestions();
+  }, []);
+  return { questions };
 };
