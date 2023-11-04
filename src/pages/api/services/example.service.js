@@ -23,6 +23,7 @@ export const useExampleService = () => {
       throw err;
     }
   };
+
   const callIGDB = async (url, query) => {
     const token = await getAccessToken();
     let responseDestructured;
@@ -38,12 +39,14 @@ export const useExampleService = () => {
       return responseDestructured;
     }
   };
+
   const fetchGenres = async () => {
     const url = "https://api.igdb.com/v4/genres/";
     const query =
       "fields name; where id = (4, 5, 7, 8, 9, 12, 13, 14, 15, 24, 31, 33, 36); limit 13;";
     return await callIGDB(url, query);
   };
+
   const fetchAgeRatings = () => {
     const RatingsEnum = {
       8: "E",
