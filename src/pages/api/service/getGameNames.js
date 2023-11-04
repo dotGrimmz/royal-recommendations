@@ -46,7 +46,7 @@ const GetGameName = async () => {
     console.log("release date: " + releaseDateIds);
 
     const url = "https://api.igdb.com/v4/games/"
-    const query = `fields name, genres.name, platforms.name, release_dates.y; where genres.id = ${genreIds} & platforms.id = ${platformIds} & game_modes = 1 & release_dates.y > 1993 & release_dates.y < 1995; sort release_dates.y asc; limit 10;`;
+    const query = `fields name; where genres.id = ${genreIds} & platforms.id = ${platformIds} & game_modes = 1 & release_dates.y > 1993 & release_dates.y < 1995; sort release_dates.y asc; limit 10;`;
 
     const response = await CallIGDB(url, query);
 
