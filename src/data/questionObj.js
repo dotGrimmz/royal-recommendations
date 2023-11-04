@@ -7,7 +7,7 @@ export const getQuestions = {
       options: [
         { name: "PC", id: 1, imgSrc: "/images/question_one/pc_image.png" },
         {
-          name: "Sony ConsolesPC",
+          name: "Sony Consoles",
           id: 2,
           imgSrc: "/images/question_one/sony_image.jpg",
         },
