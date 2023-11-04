@@ -1,13 +1,12 @@
 import axios from "axios";
-//import getAccessToken, { clientID } from "./services/igdb-api-auth";
 
-const clientID = "h1xgwhjvma1rvd46q2qwphbozrm58u"; 
-const clientSecret = "eorcmduiaee82df9u8uhzfyuobczzb";
+const GetAccessToken = async () => {
 
-let accessToken = null;
-let tokenExpiryTime = 0;
+    const clientID = "h1xgwhjvma1rvd46q2qwphbozrm58u"; 
+    const clientSecret = "eorcmduiaee82df9u8uhzfyuobczzb";
 
-const getAccessToken = async () => {
+    let accessToken = null;
+    let tokenExpiryTime = 0;
 
     if (!accessToken || Date.now() >= tokenExpiryTime) {
     const res = await axios.post(`https://id.twitch.tv/oauth2/token?client_id=${clientID}&client_secret=${clientSecret}&grant_type=client_credentials`);
@@ -18,7 +17,7 @@ const getAccessToken = async () => {
         tokenExpiryTime = res.data.expires_in * 1000;
     }
     
-return accessToken; // valid for 60 days
+    return accessToken; // valid for 60 days
 }
 
-export default getAccessToken;
+export default GetAccessToken;
