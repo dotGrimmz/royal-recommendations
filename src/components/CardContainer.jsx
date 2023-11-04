@@ -8,7 +8,7 @@ export const CardContainer = ({
   selectLimit,
   selectedResponseId,
 }) => {
-  console.log({ imgSrc });
+  console.log({ imgSrc, selectLimit });
 
   const calculateGridCols = () => {
     const itemCount = options?.length;
@@ -38,12 +38,14 @@ export const CardContainer = ({
       <div className="card-body gap-16">
         <h2 className="card-title mx-auto text-white text-3xl">{question}</h2>
         <div className={`grid  ${calculateGridCols()}  gap-16`}>
-          {options?.map((data) => {
+          {options?.map((data, index) => {
             return (
               <ItemBtnWrapper
+                key={index}
                 data={data}
                 handleClick={handleClick}
                 selectedResponseId={selectedResponseId}
+                selectLimit={selectLimit}
               />
             );
             // const { name, id, imgSrc: img } = data;
@@ -73,47 +75,12 @@ export const CardContainer = ({
   );
 };
 
-const ItemBtn = ({
-  name,
-  id,
-  imgStyles,
-  handleClick,
-  limitReached,
-  selectedResponseId,
-}) => {
-  //reset state incase user goes back - could be handy
-
-  const toggleAnimate = () => {
-    /* needs a call back to check the selected limit for the question
-    I only want to animate the button with id that is selected
-    */
-
-    console.log({ limitReached });
-    // if (limitReached) return;
-
-    //    setIsSelected(!isSelected);
-    handleClick(id);
-  };
-
-  const isSelected = selectedResponseId?.includes(id);
-  return (
-    <button
-      key={name}
-      style={imgStyles}
-      onClick={toggleAnimate}
-      className={`btn btn-primary min-h-[60px]  text-white-500 text-2xl ${
-        isSelected && "animate-bounce"
-      } `}
-    >
-      {!imgStyles && name}
-    </button>
-  );
-};
-
 // i hate this paradigm so much for jsx but
 // it'll work for now
-const ItemBtnWrapper = ({ data, handleClick }) => {
-  const { name, id, imgSrc: img, selectedLimit } = data;
+const ItemBtnWrapper = ({ data, handleClick, selectLimit }) => {
+  const { name, id, imgSrc: img } = data;
+  console.log({ selectLimit });
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
 
   const imgStyles = img
     ? {
@@ -123,7 +90,28 @@ const ItemBtnWrapper = ({ data, handleClick }) => {
       }
     : null;
 
-  const limitReached = () => selectedResponseId.length === selectedLimit;
+  const limitReached = selectedAnswers.length === selectLimit;
+  const handleMultipleAnswers = (id) => {
+    if (selectLimit === 1) {
+      return handleClick(id);
+    }
+    // if (limitReached) {
+    //   const updatedArr = [...selectedAnswers, id];
+    //   return setSelectedAnswers(updatedArr);
+    // }
+    if (selectedAnswers.length == 3) {
+      return handleClick([parseInt(selectedAnswers.join())]);
+    }
+    // return handleClick(selectedAnswers.join());
+  };
+
+  // setSelectedResponseIds((prev) => {
+  //   console.log({ prev, id, selectedResponseId });
+  //   prev[currentQuestionIndex] = id;
+  //   return prev;
+  // });
+  const isSelected = selectedAnswers.includes(id);
+  console.log(selectLimit, selectedAnswers.length, isSelected);
 
   return (
     <div>
@@ -132,8 +120,34 @@ const ItemBtnWrapper = ({ data, handleClick }) => {
         imgStyles={imgStyles}
         id={id}
         name={name}
-        handleClick={handleClick}
+        handleClick={handleMultipleAnswers}
+        isSelected={isSelected}
       />
     </div>
+  );
+};
+
+const ItemBtn = ({
+  name,
+  id,
+  imgStyles,
+  handleClick,
+  limitReached,
+  selectedResponseId,
+  isSelected,
+}) => {
+  //reset state incase user goes back - could be handy
+
+  return (
+    <button
+      key={name}
+      style={imgStyles}
+      onClick={() => handleClick(id)}
+      className={`btn btn-primary min-h-[60px]  text-white-500 text-2xl ${
+        isSelected && "animate-bounce"
+      } `}
+    >
+      {!imgStyles && name}
+    </button>
   );
 };

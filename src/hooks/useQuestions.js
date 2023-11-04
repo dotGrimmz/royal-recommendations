@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { getQuestions } from "@/data/questionObj";
+import { questionsArr } from "@/data/questionObj";
 import axios from "axios";
 
-let testing = true;
+let testing = false;
 export const useQuestions = () => {
   const [questions, setQuestions] = useState();
 
@@ -11,7 +11,6 @@ export const useQuestions = () => {
       questionOne: [],
     },
   ]);
-  const questionData = getQuestions;
 
   const handleResponse = ({ name, newVal }) => {
     // needs to take in prop name
@@ -22,12 +21,26 @@ export const useQuestions = () => {
       };
     });
   };
+
   useEffect(() => {
     const fetchQuestions = async () => {
-      if (testing) return setQuestions(questionData);
+      if (testing) return setQuestions(questionsArr);
       await axios
-        .get("/api/hello")
-        .then(setQuestions)
+        .get("/api/fetchData")
+        .then((data) => {
+          const { data: resData } = data;
+          const platformOpts = questionsArr[0].options.map((item, index) => {
+            return {
+              ...item,
+              name: resData.platforms[index].name,
+              id: resData.platforms[index].id,
+            };
+          });
+
+          const genreOpts = [...resData.genres];
+
+          console.log({ resData, questionsArr, platformOpts, genreOpts });
+        })
         .catch((e) => console.error(e));
     };
     fetchQuestions();

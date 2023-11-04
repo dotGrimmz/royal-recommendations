@@ -3,32 +3,17 @@ import { useState } from "react";
 export const Questions = ({ questions }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedResponseId, setSelectedResponseIds] = useState([]);
-
-  // const enableNext =
-  //   selectedResponseId.length > 0 &&
-  //   selectedResponseId.length === questions.selectLimit;
-  console.log({ selectedResponseId });
-
+  console.log({ questions });
   const handleClick = (id) => {
-    /* 
-    this function will need know the state 
-     of question we are on to push to question response id
-    */
-    const limit = questions?.questionsArr[currentQuestionIndex]?.selectLimit;
+    console.log(selectedResponseId[currentQuestionIndex], "current value");
+
     setSelectedResponseIds((prev) => {
       console.log({ prev, id, selectedResponseId });
-      // if (limit === 1) {
-      //   return [id];
-      // }
+      prev[currentQuestionIndex] = id;
       return prev;
     });
   };
-  // needs a setter function that takes the propName and value to overwrite
-  // console.log({ questions, selectedResponseId }, "from questions");
 
-  /* I want to create something like a controlled carousel
-    when they submit an answer it does an animation to the next component
-  */
   return (
     <div className="flex flex-col items-center justify-center h-full">
       <div>
