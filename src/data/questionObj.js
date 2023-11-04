@@ -1,24 +1,25 @@
 export const getQuestions = {
   questionsArr: [
     {
+      selectLimit: 1,
       question: "What platforms do you enjoy playing on the  most?",
       imgSrc: "/images/question_one/switches_image.jpg",
       options: [
-        { name: "PC", id: [4], imgSrc: "/images/question_one/pc_image.png" },
+        { name: "PC", id: 1, imgSrc: "/images/question_one/pc_image.png" },
         {
           name: "Sony ConsolesPC",
-          id: ["8", "10", "12", "234"],
+          id: 2,
           imgSrc: "/images/question_one/sony_image.jpg",
         },
         {
           imgSrc: "/images/question_one/xbox_image_2.png",
           name: "Microsoft Consoles",
-          id: ["2", "13", "12", "234"],
+          id: 3,
         },
         {
           imgSrc: "/images/question_one/nintendo_image.jpg",
           name: "Nintendo Consoles",
-          id: ["9", "16", "12", "234"],
+          id: 4,
         },
       ],
       /*need an array of primary keys for each console to create object key
@@ -26,6 +27,7 @@ export const getQuestions = {
       */
     },
     {
+      selectLimit: 3,
       question: "Rank your top 3 genre of games",
       imgSrc: "/images/question_two/pichu.jpg",
 
@@ -45,12 +47,30 @@ export const getQuestions = {
       ],
     },
     {
-      question: "Do you prefer single or multi-player games?",
+      selectLimit: 1,
+      question: "Which do you prefer?",
+      imgSrc: "/images/question_three/bg_image.jpg",
+
       /* need primary keys for these*/
-      options: ["Single", "Multi", "Meh, I dominate both"],
+      options: [
+        {
+          name: "Single",
+          id: 32,
+          imgSrc: "/images/question_three/singleplayer_image.jpg",
+        },
+        {
+          name: "Multi",
+          id: 53,
+          imgSrc: "/images/question_three/multiplayer_image.jpg",
+        },
+        { id: 55, name: "Meh, I dominate both" },
+      ],
     },
     {
+      selectLimit: 1,
       question: " How do you feel about retro games??",
+      imgSrc: "/images/question_four/bg_image.jpg",
+
       options: [
         {
           name: "I like them",
@@ -62,7 +82,7 @@ export const getQuestions = {
           value: "",
         },
         {
-          name: "I haven't played any but open to trying them out",
+          name: "Open to trying them out",
           value: "same as i like them",
         },
         { name: "Not a fan", value: "false" },
