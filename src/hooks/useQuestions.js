@@ -6,8 +6,22 @@ let testing = true;
 export const useQuestions = () => {
   const [questions, setQuestions] = useState();
 
-  const [response, setResponse] = useState({});
+  const [response, setResponse] = useState([
+    {
+      questionOne: [],
+    },
+  ]);
   const questionData = getQuestions;
+
+  const handleResponse = ({ name, newVal }) => {
+    // needs to take in prop name
+    // and newValueObj
+    setResponse((prev) => {
+      return {
+        ...prev,
+      };
+    });
+  };
   useEffect(() => {
     const fetchQuestions = async () => {
       if (testing) return setQuestions(questionData);

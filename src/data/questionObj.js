@@ -2,21 +2,21 @@ export const getQuestions = {
   questionsArr: [
     {
       question: "What platforms do you enjoy playing on the  most?",
-      imgSrc: "/images/switches_image.jpg",
+      imgSrc: "/images/question_one/switches_image.jpg",
       options: [
-        { name: "PC", id: [4], imgSrc: "/images/pc_image.png" },
+        { name: "PC", id: [4], imgSrc: "/images/question_one/pc_image.png" },
         {
           name: "Sony ConsolesPC",
           id: ["8", "10", "12", "234"],
-          imgSrc: "/images/sony_image.jpg",
+          imgSrc: "/images/question_one/sony_image.jpg",
         },
         {
-          imgSrc: "/images/xbox_image_2.png",
+          imgSrc: "/images/question_one/xbox_image_2.png",
           name: "Microsoft Consoles",
           id: ["2", "13", "12", "234"],
         },
         {
-          imgSrc: "/images/nintendo_image.jpg",
+          imgSrc: "/images/question_one/nintendo_image.jpg",
           name: "Nintendo Consoles",
           id: ["9", "16", "12", "234"],
         },
@@ -27,10 +27,11 @@ export const getQuestions = {
     },
     {
       question: "Rank your top 3 genre of games",
+      imgSrc: "/images/question_two/pichu.jpg",
+
       options: [
         { id: 4, name: "Fighting" },
         { id: 5, name: "Shooter" },
-        { id: 7, name: "Music" },
         { id: 8, name: "Platform" },
         { id: 9, name: "Puzzle" },
         { id: 12, name: "Role-playing (RPG)" },
