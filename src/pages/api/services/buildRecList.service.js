@@ -42,6 +42,8 @@ const buildGameRecList = async () => {
     const query = `fields name; where genres.id = ${genreIds} & platforms.id = ${platformIds} & game_modes = ${multiPlayers.id} & release_dates.y >= ${releaseDate[0]} & release_dates.y <= ${releaseDate[1]}; sort release_dates.y asc; limit 10;`;
 
     const response = await callIGDB(url, query);
+    // response holds returned games as {id, name} objs
+    // list should have 10 games
 
     //const res = [...response];
     //console.log("response: " + JSON.stringify(response));
