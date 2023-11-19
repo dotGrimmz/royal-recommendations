@@ -14,6 +14,12 @@ export const CardContainer = ({
   if its included set the animation  right? right. 
   
   */
+  useEffect(() => {
+    console.log("this component is mounted");
+    return () => {
+      console.log("this component is unmounting");
+    };
+  }, []);
 
   return (
     <div className="card min-w-[40vw] min-h-[300px]  bg-base-100 shadow-xl image-full overflow-hidden">

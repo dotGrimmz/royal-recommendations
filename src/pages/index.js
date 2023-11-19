@@ -10,6 +10,7 @@ export default function Home() {
     currentQuestionIndex,
     setCurrentQuestionIndex,
     handleNext,
+    handleSubmit,
   } = useQuestions();
   return (
     <>
@@ -19,6 +20,7 @@ export default function Home() {
         currentQuestionIndex={currentQuestionIndex}
         setCurrentQuestionIndex={setCurrentQuestionIndex}
         handleNext={handleNext}
+        handleSubmit={handleSubmit}
       />
       <ToastContainer />
     </>

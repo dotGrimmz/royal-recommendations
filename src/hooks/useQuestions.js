@@ -8,6 +8,7 @@ export const useQuestions = () => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const currentQuestion = questions?.[currentQuestionIndex];
+
   useEffect(() => {
     const fetchQuestions = async () => {
       if (testing) return setQuestions(questionsArr);
@@ -61,6 +62,16 @@ export const useQuestions = () => {
     });
   };
 
+  const handleSubmit = () => {
+    const responseArr = questions.map((q) => {
+      return {
+        id: q.responseId,
+      };
+    });
+
+    console.log({ responseArr });
+  };
+
   const testComplete = questions.every((q) => q.responseId !== "");
   console.log({ testComplete });
   return {
@@ -69,5 +80,6 @@ export const useQuestions = () => {
     currentQuestionIndex,
     setCurrentQuestionIndex,
     handleNext,
+    handleSubmit,
   };
 };
