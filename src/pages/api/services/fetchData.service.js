@@ -17,7 +17,7 @@ export const useFetchDataService = () => {
 
         accessToken = response.data.access_token;
       }
-      return accessToken; // valid for 60 days
+      return accessToken;
 
     } catch (err) {
       throw err;
@@ -141,10 +141,6 @@ const fetchPlatforms = async() => {
         multiPlayers: multiPlayers,
         ageRating: ageRating
     };
-
-    //return await Promise.all([fetchGenres(), fetchPlatforms(), fetchMultiPlayerMode(), fetchGameName(), fetchAgeRatings()]);
-
-
 
     //build the object based on each index of result
   };

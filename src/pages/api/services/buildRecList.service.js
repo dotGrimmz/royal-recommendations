@@ -19,13 +19,11 @@ const buildGameRecList = async () => {
         platformIds += `${platform.id}, `;
     })
     platformIds = platformIds.slice(0, -2) + ")";
-    //console.log("platforms: " + platformIds);
 
     genres.map((genre) => {
         genreIds += `${genre.id}, `;
     })
     genreIds = genreIds.slice(0, -2) + ")";
-    //console.log("genres: " + genreIds);
 
     let releaseDate = [];
     // user wants retro games
@@ -44,10 +42,6 @@ const buildGameRecList = async () => {
     const response = await callIGDB(url, query);
     // response holds returned games as {id, name} objs
     // list should have 10 games
-
-    //const res = [...response];
-    //console.log("response: " + JSON.stringify(response));
-    //console.log(res);
 
     return response;
 }
