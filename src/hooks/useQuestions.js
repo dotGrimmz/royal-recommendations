@@ -62,13 +62,15 @@ export const useQuestions = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const submissionPayload = questions.map((q) => {
       return {
         name: q.name,
         id: q.responseId,
       };
     });
+
+    const response = await axios.post("/api/buildRecList", submissionPayload);
 
     console.log({ submissionPayload });
   };

@@ -16,7 +16,7 @@ export const useFetchDataService = () => {
 
         accessToken = response.data.access_token;
       }
-      return accessToken; // valid for 60 days
+      return accessToken;
     } catch (err) {
       throw err;
     }
@@ -120,86 +120,6 @@ export const useFetchDataService = () => {
     }
   };
 
-  const fetchReleaseDate = async () => {
-    // add param; maybe array of min/max range
-    const url = "https://api.igdb.com/v4/release_dates/";
-    const query = "fields y; where y >= 1990 & y < 1999; limit 10;";
-
-    try {
-      const response = await callIGDB(url, query);
-
-      let releaseDates = [];
-      response.map((date) => {
-        releaseDates.push(date.y);
-      });
-
-      return releaseDates;
-    } catch (err) {
-      throw err;
-    }
-  };
-
-  // we don't need game names here
-
-  const fetchGameName = async () => {
-    // build up the query string based on these fields
-    // extracting ids into easily searchable format for the query string
-    // format: (1, 2, 3, 4, ...)
-    //const genres = await fetchGenres();
-    //const platforms = await fetchPlatforms();
-    //const multiPlayers = await fetchMultiPlayerMode();
-    //const ageRating = await fetchAgeRatings();
-
-    const [genres, platforms, multiPlayers, ageRating] = await Promise.all([
-      fetchGenres(),
-      fetchPlatforms(),
-      fetchMultiPlayerMode(),
-      fetchAgeRatings(),
-    ]);
-    //const releaseDate = await fetchReleaseDate();
-
-    let genreIds = "(";
-    let platformIds = "(";
-    let multiPlayerIds = "(";
-    //let releaseDateIds = "(";
-
-    genres.map((genre) => {
-      genreIds += `${genre.id}, `;
-    });
-    genreIds = genreIds.slice(0, -2) + ")";
-    //console.log("genres: " + genreIds);
-
-    platforms.map((platform) => {
-      platformIds += `${platform.id}, `;
-    });
-    platformIds = platformIds.slice(0, -2) + ")";
-    //console.log("platforms: " + platformIds);
-
-    multiPlayers.map((mp) => {
-      multiPlayerIds += `${mp.id}, `;
-    });
-    multiPlayerIds = multiPlayerIds.slice(0, -2) + ")";
-    //console.log("multiplayer: " + multiPlayerIds);
-
-    // this probbly needs to be reworked; release date should be array of 2 years, min and max
-    // releaseDate.map((date) => {
-    //     releaseDateIds += `${date}, `;
-    // })
-    // releaseDateIds = releaseDateIds.slice(0, -2) + ")";
-    //console.log("release date: " + releaseDateIds);
-
-    const url = "https://api.igdb.com/v4/games/";
-    const query = `fields name; where genres.id = ${genreIds} & platforms.id = ${platformIds} & game_modes = 1 & release_dates.y > 1993 & release_dates.y < 1995; sort release_dates.y asc; limit 10;`;
-
-    const response = await callIGDB(url, query);
-
-    //const res = [...response];
-    //console.log("response: " + JSON.stringify(response));
-    //console.log(res);
-
-    return response;
-  };
-
   const buildGameObj = async () => {
     const [genres, platforms, multiPlayers, ageRating] = await Promise.all([
       fetchGenres(),
@@ -214,8 +134,6 @@ export const useFetchDataService = () => {
       multiPlayers: multiPlayers,
       ageRating: ageRating,
     };
-
-    //return await Promise.all([fetchGenres(), fetchPlatforms(), fetchMultiPlayerMode(), fetchGameName(), fetchAgeRatings()]);
 
     //build the object based on each index of result
   };

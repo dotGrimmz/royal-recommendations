@@ -1,6 +1,6 @@
 export const questionsArr = [
   {
-    name: "platform",
+    name: "platform", // with the param type
     responseId: "",
     question: "What platforms do you enjoy playing on the  most?",
     imgSrc: "/images/question_one/switches_image.jpg",
