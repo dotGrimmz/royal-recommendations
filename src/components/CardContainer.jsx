@@ -7,20 +7,6 @@ export const CardContainer = ({
   imgSrc,
   responseId,
 }) => {
-  console.log({ responseId });
-
-  /*
-  So at first I just want to capture the response of the current question
-  if its included set the animation  right? right. 
-  
-  */
-  useEffect(() => {
-    console.log("this component is mounted");
-    return () => {
-      console.log("this component is unmounting");
-    };
-  }, []);
-
   return (
     <div className="card min-w-[40vw] min-h-[300px]  bg-base-100 shadow-xl image-full overflow-hidden">
       {imgSrc && (
@@ -67,8 +53,6 @@ export const CardContainer = ({
 };
 
 const ItemBtn = ({ name, id, imgStyles, handleClick, isSelected }) => {
-  //reset state incase user goes back - could be handy
-  // isSelected && "animate-bounce";
   return (
     <button
       key={name}

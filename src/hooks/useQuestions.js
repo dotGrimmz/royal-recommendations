@@ -63,17 +63,18 @@ export const useQuestions = () => {
   };
 
   const handleSubmit = () => {
-    const responseArr = questions.map((q) => {
+    const submissionPayload = questions.map((q) => {
       return {
+        name: q.name,
         id: q.responseId,
       };
     });
 
-    console.log({ responseArr });
+    console.log({ submissionPayload });
   };
 
   const testComplete = questions.every((q) => q.responseId !== "");
-  console.log({ testComplete });
+
   return {
     questions,
     handleClick,
