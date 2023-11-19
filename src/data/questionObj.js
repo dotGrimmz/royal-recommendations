@@ -3,13 +3,13 @@ export const getQuestions = {
     {
       selectLimit: 1,
       question: "What platforms do you enjoy playing on the  most?",
-      imgSrc: "/images/question_one/switches_image.jpg",
+      imgSrc: "/images/question_one/switches_image.jpg", // question bg img
       options: [
         { name: "PC", id: 1, imgSrc: "/images/question_one/pc_image.png" },
         {
           name: "Sony Consoles",
-          id: 2,
-          imgSrc: "/images/question_one/sony_image.jpg",
+          id: 2, // dummy ids
+          imgSrc: "/images/question_one/sony_image.jpg", //buttom img
         },
         {
           imgSrc: "/images/question_one/xbox_image_2.png",
