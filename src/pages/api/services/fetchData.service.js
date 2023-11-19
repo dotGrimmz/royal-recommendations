@@ -4,8 +4,7 @@ const CLIENT_ID = "h1xgwhjvma1rvd46q2qwphbozrm58u";
 const CLIENT_SECRET = "eorcmduiaee82df9u8uhzfyuobczzb";
 
 export const useFetchDataService = () => {
-
-    // get token
+  // get token
   const getAccessToken = async () => {
     let accessToken = null;
 
@@ -18,7 +17,6 @@ export const useFetchDataService = () => {
         accessToken = response.data.access_token;
       }
       return accessToken;
-
     } catch (err) {
       throw err;
     }
@@ -41,18 +39,16 @@ export const useFetchDataService = () => {
     }
   };
 
-  
   const fetchGenres = async () => {
     const url = "https://api.igdb.com/v4/genres/";
     const query =
       "fields name; where id = (4, 5, 7, 8, 9, 12, 13, 14, 15, 24, 31, 33, 36); limit 13;";
-      try{
-        return await callIGDB(url, query);
-      } catch(err){
-        throw err;
-      }
+    try {
+      return await callIGDB(url, query);
+    } catch (err) {
+      throw err;
+    }
   };
-  
 
   const fetchAgeRatings = async () => {
     const RatingsEnum = {
@@ -65,81 +61,78 @@ export const useFetchDataService = () => {
     const url = "https://api.igdb.com/v4/age_ratings/";
     const query = "fields rating; where category = 1;";
 
-    try{
-        return await callIGDB(url, query);
-    } catch(err) {
-        throw err;
+    try {
+      return await callIGDB(url, query);
+    } catch (err) {
+      throw err;
     }
   };
 
-
-  const fetchMultiPlayerMode = async() => {
-
+  const fetchMultiPlayerMode = async () => {
     const url = "https://api.igdb.com/v4/game_modes/";
     const query = "fields name; where id = (1, 2);";
     // 1 = single, 2 = multi
 
     try {
-        return await callIGDB(url, query);
-
+      return await callIGDB(url, query);
     } catch (err) {
-        throw err;
+      throw err;
     }
-};
+  };
 
-
-const fetchPlatforms = async() => {
-
+  const fetchPlatforms = async () => {
     const url = "https://api.igdb.com/v4/platforms/";
-    const query = "fields name; where name ~ *\"microsoft\"* | name ~ *\"nintendo\"* | name ~ *\"playstation\"* | name ~ *\"xbox\"*; sort id asc; limit 100;";
+    const query =
+      'fields name; where name ~ *"microsoft"* | name ~ *"nintendo"* | name ~ *"playstation"* | name ~ *"xbox"*; sort id asc; limit 100;';
 
     try {
-        const platforms = await callIGDB(url, query);
+      const platforms = await callIGDB(url, query);
 
-        // to hold each platform type
-        let nintendo = [];
-        let sony = [];
-        let pc = [];
-        let microsoft = [];
+      // to hold each platform type
+      let nintendo = [];
+      let sony = [];
+      let pc = [];
+      let microsoft = [];
 
-        // map the platforms to their respective arrays
-        platforms.map((obj) => {
-            if (obj.name.includes('Nintendo')) {
-                nintendo.push(obj.id);
-            }
-            else if (obj.name.includes('PlayStation')) {
-                sony.push(obj.id);
-            }
-            else if (obj.name.includes('PC')) {
-                pc.push(obj.id);
-            }
-            else if (obj.name.includes('Xbox')) {
-                microsoft.push(obj.id);
-            }
-        })
+      // map the platforms to their respective arrays
+      platforms.map((obj) => {
+        if (obj.name.includes("Nintendo")) {
+          nintendo.push(obj.id);
+        } else if (obj.name.includes("PlayStation")) {
+          sony.push(obj.id);
+        } else if (obj.name.includes("PC")) {
+          pc.push(obj.id);
+        } else if (obj.name.includes("Xbox")) {
+          microsoft.push(obj.id);
+        }
+      });
 
-        let platformObjs = [ {name: "PC", id: pc}, 
-                            {name: "Sony Consoles", id: sony }, 
-                            {name: "Microsoft Consoles", id: microsoft}, 
-                            {name: "Nintendo Consoles", id: nintendo}
-        ];
+      let platformObjs = [
+        { name: "PC", id: 1 },
+        { name: "Sony Consoles", id: 2 },
+        { name: "Microsoft Consoles", id: 3 },
+        { name: "Nintendo Consoles", id: 4 },
+      ];
 
-        return platformObjs;
-
-    } catch(err) {
-        throw err;
+      return platformObjs;
+    } catch (err) {
+      throw err;
     }
-}
-
+  };
 
   const buildGameObj = async () => {
-    const [genres, platforms, multiPlayers, ageRating] = await Promise.all([fetchGenres(), fetchPlatforms(), fetchMultiPlayerMode(), fetchAgeRatings()]);
+    const [genres, platforms, multiPlayers, ageRating] = await Promise.all([
+      fetchGenres(),
+      fetchPlatforms(),
+      fetchMultiPlayerMode(),
+      fetchAgeRatings(),
+    ]);
 
     return {
-        genres: genres,
-        platforms: platforms,
-        multiPlayers: multiPlayers,
-        ageRating: ageRating
+      genres: genres,
+      platforms: platforms,
+      multiPlayers: multiPlayers,
+      ageRating: ageRating,
     };
 
     //build the object based on each index of result

@@ -1,36 +1,67 @@
 import { useState, useEffect } from "react";
-import { getQuestions } from "@/data/questionObj";
+import { questionsArr } from "@/data/questionObj";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 let testing = true;
 export const useQuestions = () => {
-  const [questions, setQuestions] = useState();
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const currentQuestion = questions?.[currentQuestionIndex];
 
-  const [response, setResponse] = useState([
-    {
-      questionOne: [],
-    },
-  ]);
-  const questionData = getQuestions;
-
-  const handleResponse = ({ name, newVal }) => {
-    // needs to take in prop name
-    // and newValueObj
-    setResponse((prev) => {
-      return {
-        ...prev,
-      };
-    });
-  };
   useEffect(() => {
     const fetchQuestions = async () => {
-      if (testing) return setQuestions(questionData);
+      if (testing) return setQuestions(questionsArr);
       await axios
-        .get("/api/hello")
+        .get("/api/fetchData")
         .then(setQuestions)
         .catch((e) => console.error(e));
     };
     fetchQuestions();
   }, []);
-  return { questions };
+
+  const handleClick = (id) => {
+    return setQuestions((prev) => {
+      prev[currentQuestionIndex].responseId = id;
+      return [...prev];
+    });
+  };
+
+  const handleNext = () => {
+    if (currentQuestion.responseId) {
+      return setCurrentQuestionIndex((prev) => prev + 1);
+    }
+    return toast("Select Response!", {
+      position: "bottom-left",
+      autoClose: 1200,
+      hideProgressBar: true,
+      closeOnClick: true,
+      theme: "colored",
+      type: "info",
+    });
+  };
+
+  const handleSubmit = async () => {
+    const submissionPayload = questions.map((q) => {
+      return {
+        name: q.name,
+        id: q.responseId,
+      };
+    });
+
+    const response = await axios.post("/api/buildRecList", submissionPayload);
+
+    console.log({ submissionPayload });
+  };
+
+  const testComplete = questions.every((q) => q.responseId !== "");
+
+  return {
+    questions,
+    handleClick,
+    currentQuestionIndex,
+    setCurrentQuestionIndex,
+    handleNext,
+    handleSubmit,
+  };
 };
