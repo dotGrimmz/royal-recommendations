@@ -14,28 +14,7 @@ export const useQuestions = () => {
       if (testing) return setQuestions(questionsArr);
       await axios
         .get("/api/fetchData")
-        .then((data) => {
-          const { data: resData } = data;
-          const platformOpts = questionsArr[0].options.map((item, index) => {
-            return {
-              ...item,
-              name: resData.platforms[index].name,
-              id: resData.platforms[index].id,
-            };
-          });
-
-          setQuestions([{ ...questionsArr[0], options: platformOpts }]);
-
-          const genreOpts = [...resData.genres];
-          setQuestions((prev) => {
-            const updated = [
-              ...prev,
-              { ...questionsArr[1], options: genreOpts },
-            ];
-            return updated;
-          });
-          console.log({ resData, questionsArr, platformOpts, genreOpts });
-        })
+        .then(setQuestions)
         .catch((e) => console.error(e));
     };
     fetchQuestions();
