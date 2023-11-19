@@ -1,32 +1,21 @@
 import { CardContainer } from "./CardContainer";
-import { useState } from "react";
-export const Questions = ({ questions }) => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedResponseId, setSelectedResponseIds] = useState([]);
-  console.log({ questions });
-  const handleClick = (id) => {
-    console.log(selectedResponseId[currentQuestionIndex], "current value");
-
-    setSelectedResponseIds((prev) => {
-      console.log({ prev, id, selectedResponseId });
-      prev[currentQuestionIndex] = id;
-      return prev;
-    });
-  };
-
+export const Questions = ({
+  questions,
+  handleClick,
+  currentQuestionIndex,
+  setCurrentQuestionIndex,
+  handleNext,
+}) => {
   return (
     <div className="flex flex-col items-center justify-center h-full">
       <div>
-        {currentQuestionIndex < questions?.questionsArr.length ? (
+        {currentQuestionIndex < questions?.length ? (
           <CardContainer
-            question={questions?.questionsArr[currentQuestionIndex]?.question}
-            options={questions?.questionsArr[currentQuestionIndex]?.options}
-            imgSrc={questions?.questionsArr[currentQuestionIndex]?.imgSrc}
+            question={questions?.[currentQuestionIndex]?.question}
+            options={questions?.[currentQuestionIndex]?.options}
+            imgSrc={questions?.[currentQuestionIndex]?.imgSrc}
             handleClick={handleClick}
-            selectLimit={
-              questions?.questionsArr[currentQuestionIndex]?.selectLimit
-            }
-            selectedResponseId={selectedResponseId}
+            responseId={questions?.[currentQuestionIndex]?.responseId}
           />
         ) : (
           <div>All questions Answered</div>
@@ -40,10 +29,7 @@ export const Questions = ({ questions }) => {
         >
           Back
         </button>
-        <button
-          className="btn btn-primary min-w-[120px]"
-          onClick={() => setCurrentQuestionIndex((prev) => prev + 1)}
-        >
+        <button className="btn btn-primary min-w-[120px]" onClick={handleNext}>
           Next
         </button>
       </div>
