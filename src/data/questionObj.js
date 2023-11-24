@@ -3,11 +3,11 @@ export const questionsArr = [
     name: "platform", // with the param type
     responseId: "",
     question: "What platforms do you enjoy playing on the  most?",
-    imgSrc: "/images/question_one/switches_image.jpg",
+    imgSrc: "/images/question_one/switches_image.jpg", // question bg image
     options: [
       { imgSrc: "/images/question_one/pc_image.png", id: "1", name: "PC" },
       {
-        imgSrc: "/images/question_one/sony_image.jpg",
+        imgSrc: "/images/question_one/sony_image.jpg", // button img
         id: "2",
         name: "Sony Consoles",
       },

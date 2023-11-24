@@ -3,21 +3,127 @@ import { useFetchDataService } from "./services/fetchData.service";
 export default async function fetchData(req, res) {
   const { buildGameObj } = useFetchDataService();
 
-<<<<<<< HEAD
-  const results = await buildGameObj();
-  //const result = [...results];
+  const results = await buildGameObj();  
+  console.log(results);
+  // let question = {
+  //   name: "param type (platform, etc)",
+  //   responseId: "",
+  //   question: "corresponding to name",
+  //   imgSrc: "img path for question bg",
+  //   options: [
+  //     {
+  //       // img: "img path for option",
+  //       // id: "",
+  //       // name: "value for option button"
+  //     }
+  //   ]
+  // };
 
-  // structure each promise as an object
-  // ex. genres in a genre obj
-  //console.log("results:" + result);
-  return res.status(200).json(results);
-=======
-    const results = await buildGameObj();
-    
+  let questions = [];
+
+  // first populating array with all question objects; filling in the question field
+  questions.push(
+    {
+      name: "genres",
+      responseId: "1",
+      question: "Which of these genres do you like best?",
+      imgSrc: "",
+      options: [{
+        img: "img path for option",
+        id: "",
+        name: "value for option button"
+      }]
+    }
+  );
+
+  questions.push(
+    {
+      name: "platforms",
+      responseId: "2",
+      question: "Which platform do you enjoy playing on the most?",
+      imgSrc: "",
+      options: [{
+        img: "img path for option",
+        id: "",
+        name: "value for option button"
+      }]
+    }
+  );
+
+  questions.push(
+    {
+      name: "retro",
+      responseId: "3",
+      question: "How do you feel about retro games?",
+      imgSrc: "",
+      options: [{
+        img: "img path for option",
+        id: "",
+        name: "value for option button"
+      }]
+    }
+  );
+
+  questions.push(
+    {
+      name: "play style",
+      responseId: "4",
+      question: "Which play style do you prefer?",
+      imgSrc: "",
+      options: [{
+        img: "img path for option",
+        id: "",
+        name: "value for option button"
+      }]
+    }
+  );
+    /*
+    {
+      name: "question name, determined by param (platform, etc)",
+      responseId: "",
+      question: "question for corresponding name",
+      imgSrc: "img path for question",
+      options: [
+        {
+          img: "img path", we can get this from IGDB
+          id: "someId",
+          name: "platform name 1"
+        },
+                {
+          img: "img path", we can get this from IGDB
+          id: "someId",
+          name: "platform name 2"
+        },
+                {
+          img: "img path", we can get this from IGDB
+          id: "someId",
+          name: "platform name 3"
+        },
+                {
+          img: "img path", we can get this from IGDB
+          id: "someId",
+          name: "platform name 4"
+        }
+      ]
+    }    
+    */
+
+  // let questions = [];
+
+  // results.platforms.forEach( p => {
+  //   let platform = {
+  //     "img" : '',
+  //     "id" : toString(p.id),
+  //     "name" : p.name
+  //   };
+  //   questions.push(platform);
+  // });
+
     // structure each promise as an object
     // ex. genres in a genre obj
-    return res.status(200).json(results);
->>>>>>> 38b11e67d0cfa62053a996cf2cd749913306f4f1
+
+    console.log(questions);
+    return res.status(200).json(questions);
 }
 
 

@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
 import { questionsArr } from "@/data/questionObj";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-let testing = true;
+let testing = false;
 export const useQuestions = () => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -51,7 +51,7 @@ export const useQuestions = () => {
 
     const response = await axios.post("/api/buildRecList", submissionPayload);
 
-    console.log({ submissionPayload });
+    console.log({ response });
   };
 
   const testComplete = questions.every((q) => q.responseId !== "");
