@@ -12,10 +12,16 @@ export const useQuestions = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       if (testing) return setQuestions(questionsArr);
-      await axios
-        .get("/api/fetchData")
-        .then(setQuestions)
-        .catch((e) => console.error(e));
+      // await axios
+      //   .get("/api/fetchData")
+      //   .then(setQuestions)
+      //   .catch((e) => console.error(e));
+      try{
+        const data = await axios.get("/api/fetchData");
+        return setQuestions(data || []); // thought the issue could be that questions is not being defined
+      }catch(e) {
+        console.error(e);
+      }
     };
     fetchQuestions();
   }, []);
@@ -53,6 +59,9 @@ export const useQuestions = () => {
 
     console.log({ response });
   };
+
+  // can confirm questions is empty when calling api
+  console.log("questions:" + questions);
 
   const testComplete = questions.every((q) => q.responseId !== "");
 

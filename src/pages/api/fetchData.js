@@ -1,10 +1,13 @@
 import { useFetchDataService } from "./services/fetchData.service";
 
 export default async function fetchData(req, res) {
-  const { buildGameObj } = useFetchDataService();
 
-  const results = await buildGameObj();  
-  console.log(results);
+  const { buildGameObj } = useFetchDataService();
+  const results = await buildGameObj();
+
+
+  //const results = await buildGameObj();  
+  //console.log(results);
   // let question = {
   //   name: "param type (platform, etc)",
   //   responseId: "",
@@ -21,112 +24,80 @@ export default async function fetchData(req, res) {
 
   let questions = [];
 
-  // first populating array with all question objects; filling in the question field
-  questions.push(
-    {
-      name: "genres",
-      responseId: "1",
-      question: "Which of these genres do you like best?",
-      imgSrc: "",
-      options: [{
-        img: "img path for option",
-        id: "",
-        name: "value for option button"
-      }]
-    }
-  );
+  // do we include all the genres as choices or make groups?
 
-  questions.push(
-    {
-      name: "platforms",
-      responseId: "2",
-      question: "Which platform do you enjoy playing on the most?",
-      imgSrc: "",
-      options: [{
-        img: "img path for option",
-        id: "",
-        name: "value for option button"
-      }]
-    }
-  );
+  // populate question array with question objects (options are filled in the function call below)
+  questions.push(formQuestionObj("platforms", "Which platform do you enjoy playing on the most?", "", results));
+  questions.push(formQuestionObj("genres", "Which of these genres do you like best?", "", results));
+  questions.push(formQuestionObj("multiPlayers", "Which play style do you prefer?", "", results));
 
+  // only this one is formed locally bc the options don't rely on API response
   questions.push(
     {
       name: "retro",
-      responseId: "3",
+      responseId: "",
       question: "How do you feel about retro games?",
       imgSrc: "",
-      options: [{
-        img: "img path for option",
-        id: "",
-        name: "value for option button"
-      }]
-    }
-  );
-
-  questions.push(
-    {
-      name: "play style",
-      responseId: "4",
-      question: "Which play style do you prefer?",
-      imgSrc: "",
-      options: [{
-        img: "img path for option",
-        id: "",
-        name: "value for option button"
-      }]
-    }
-  );
-    /*
-    {
-      name: "question name, determined by param (platform, etc)",
-      responseId: "",
-      question: "question for corresponding name",
-      imgSrc: "img path for question",
       options: [
         {
-          img: "img path", we can get this from IGDB
-          id: "someId",
-          name: "platform name 1"
+          img: "img path for option",
+          id: "1",
+          name: "I like them"
         },
-                {
-          img: "img path", we can get this from IGDB
-          id: "someId",
-          name: "platform name 2"
+        {
+          img: "img path for option",
+          id: "2",
+          name: "Open to trying them out"
         },
-                {
-          img: "img path", we can get this from IGDB
-          id: "someId",
-          name: "platform name 3"
-        },
-                {
-          img: "img path", we can get this from IGDB
-          id: "someId",
-          name: "platform name 4"
+        {
+          img: "img path for option",
+          id: "0",
+          name: "Not a fan"
         }
       ]
-    }    
-    */
+    }
+  );
 
-  // let questions = [];
-
-  // results.platforms.forEach( p => {
-  //   let platform = {
-  //     "img" : '',
-  //     "id" : toString(p.id),
-  //     "name" : p.name
-  //   };
-  //   questions.push(platform);
-  // });
-
-    // structure each promise as an object
-    // ex. genres in a genre obj
 
     console.log(questions);
     return res.status(200).json(questions);
 }
 
+const formQuestionObj = (name, question, imgPath, results) => {
 
+  const optionsPopulated = populateQuestionOptions(name, results);
+
+  return {
+    name: name,
+    responseId: "",
+    question: question,
+    imgSrc: imgPath,
+    options: optionsPopulated
+  };
+}
+
+const populateQuestionOptions = (name, results) => {
+
+  let options = [];
+
+  if (results.hasOwnProperty(name)) {
+    const prop = results[name];
+    
+    prop.forEach((item) => {
+      let option = {
+        img: "",
+        id: item.id,
+        name: item.name
+      }
+
+      options.push(option);
+    })
+    return options;
+  }
+
+  return [];
+
+};
 
 /*
     handler = api endpoint
