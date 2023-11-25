@@ -1,4 +1,4 @@
-import { questionsArr } from "@/data/questionObj";
+import { VERSION_ONE_TEMPLATE } from "@/templates/version_one";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ export const useQuestions = () => {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      if (testing) return setQuestions(questionsArr);
+      if (testing) return setQuestions(VERSION_ONE_TEMPLATE);
       // await axios
       //   .get("/api/fetchData")
       //   .then(setQuestions)

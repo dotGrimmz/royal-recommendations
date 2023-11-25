@@ -13,7 +13,7 @@ export const useBuildRecListService = ({selectedResponseId}) => {
 
 const buildGameRecList = async () => {
 
-    //console.log(selectedResponseId);
+    console.log(selectedResponseId);
 
     const [platforms, genres, multiPlayers, retroGames] = selectedResponseId;
 

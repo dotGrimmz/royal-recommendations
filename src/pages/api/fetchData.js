@@ -22,82 +22,82 @@ export default async function fetchData(req, res) {
   //   ]
   // };
 
-  let questions = [];
+  //let questions = [];
 
   // do we include all the genres as choices or make groups?
 
   // populate question array with question objects (options are filled in the function call below)
-  questions.push(formQuestionObj("platforms", "Which platform do you enjoy playing on the most?", "", results));
-  questions.push(formQuestionObj("genres", "Which of these genres do you like best?", "", results));
-  questions.push(formQuestionObj("multiPlayers", "Which play style do you prefer?", "", results));
+  // questions.push(formQuestionObj("platforms", "Which platform do you enjoy playing on the most?", "", results));
+  // questions.push(formQuestionObj("genres", "Which of these genres do you like best?", "", results));
+  // questions.push(formQuestionObj("multiPlayers", "Which play style do you prefer?", "", results));
 
-  // only this one is formed locally bc the options don't rely on API response
-  questions.push(
-    {
-      name: "retro",
-      responseId: "",
-      question: "How do you feel about retro games?",
-      imgSrc: "",
-      options: [
-        {
-          img: "img path for option",
-          id: "1",
-          name: "I like them"
-        },
-        {
-          img: "img path for option",
-          id: "2",
-          name: "Open to trying them out"
-        },
-        {
-          img: "img path for option",
-          id: "0",
-          name: "Not a fan"
-        }
-      ]
-    }
-  );
+  // // only this one is formed locally bc the options don't rely on API response
+  // questions.push(
+  //   {
+  //     name: "retro",
+  //     responseId: "",
+  //     question: "How do you feel about retro games?",
+  //     imgSrc: "",
+  //     options: [
+  //       {
+  //         img: "img path for option",
+  //         id: "1",
+  //         name: "I like them"
+  //       },
+  //       {
+  //         img: "img path for option",
+  //         id: "2",
+  //         name: "Open to trying them out"
+  //       },
+  //       {
+  //         img: "img path for option",
+  //         id: "0",
+  //         name: "Not a fan"
+  //       }
+  //     ]
+  //   }
+  // );
 
 
     console.log(questions);
     return res.status(200).json(questions);
 }
 
-const formQuestionObj = (name, question, imgPath, results) => {
+// const formQuestionObj = (name, question, imgPath, results) => {
 
-  const optionsPopulated = populateQuestionOptions(name, results);
+//   const optionsPopulated = populateQuestionOptions(name, results);
 
-  return {
-    name: name,
-    responseId: "",
-    question: question,
-    imgSrc: imgPath,
-    options: optionsPopulated
-  };
-}
+//   return {
+//     name: name,
+//     responseId: "",
+//     question: question,
+//     imgSrc: imgPath,
+//     options: optionsPopulated
+//   };
+// }
 
-const populateQuestionOptions = (name, results) => {
+// const populateQuestionOptions = (name, results) => {
 
-  let options = [];
+//   let options = [];
 
-  if (results.hasOwnProperty(name)) {
-    const prop = results[name];
+//   if (results.hasOwnProperty(name)) {
+//     const prop = results[name];
     
-    prop.forEach((item) => {
-      let option = {
-        img: "",
-        id: item.id,
-        name: item.name
-      }
+//     prop.forEach((item) => {
+//       let option = {
+//         img: "",
+//         id: item.id,
+//         name: item.name
+//       }
 
-      options.push(option);
-    })
-    return options;
-  }
+//       options.push(option);
+//     })
+//     return options;
+//   }
 
-  return [];
+//   return [];
 
-};
+// };
 
 /*
     handler = api endpoint

@@ -1,7 +1,7 @@
+import { VERSION_ONE_TEMPLATE } from "@/templates/version_one";
 import axios from "axios";
-// or import your headers from wherever it is stored
-const CLIENT_ID = "h1xgwhjvma1rvd46q2qwphbozrm58u";
-const CLIENT_SECRET = "eorcmduiaee82df9u8uhzfyuobczzb";
+
+console.log(VERSION_ONE_TEMPLATE);
 
 export const useFetchDataService = () => {
   // get token
@@ -41,6 +41,24 @@ export const useFetchDataService = () => {
 
   const fetchGenres = async () => {
     const url = "https://api.igdb.com/v4/genres/";
+    // reduce query string to only 4
+    //(4, 5, 7, 8, 9, 12, 13, 14, 15, 24, 31, 33, 36)
+    /*
+        4 fighting
+        5 shooter
+        7 music
+        8 platform
+        9 puzzle
+        12 RPG
+        13 simulator
+        14 sport
+        15 stragety
+        24 tactical
+        31 adventure
+        33 arcade
+        36 MOBA
+     */
+    // reduce to 8
     const query =
       "fields name; where id = (4, 5, 7, 8, 9, 12, 13, 14, 15, 24, 31, 33, 36); limit 13;";
     try {
@@ -93,6 +111,7 @@ export const useFetchDataService = () => {
       let sony = [];
       let pc = [];
       let microsoft = [];
+      let platformObjs; // the platform object being shaped
 
       // map the platforms to their respective arrays
       platforms.map((obj) => {
@@ -107,7 +126,7 @@ export const useFetchDataService = () => {
         }
       });
 
-      let platformObjs = [
+      platformObjs = [
         { name: "PC", id: 1 },
         { name: "Sony Consoles", id: 2 },
         { name: "Microsoft Consoles", id: 3 },
@@ -137,6 +156,38 @@ export const useFetchDataService = () => {
 
     //build the object based on each index of result
   };
+
+  const populateQuestionOptions = async () => {
+
+    // build game obj; can be destructured piece by piece as needed
+    const {genres} = await buildGameObj();
+
+    // pull name param from questions
+    // _ ignores the first object being pulled
+    const [_, questionTwo] = VERSION_ONE_TEMPLATE;
+
+  let optionsToFill = [];
+
+  //if (results.hasOwnProperty(questionTwo.name)) {
+  //const prop = results[name];
+
+    
+    questionTwo.options.forEach((item) => {
+      let optionCreated = {
+        img: "",
+        id: item.id,
+        name: item.name
+      }
+
+      optionsToFill.push(option);
+    })
+    
+    questionTwo.options = optionsToFill;
+  //}
+
+  //return [];
+
+};
 
   return { buildGameObj };
 };
