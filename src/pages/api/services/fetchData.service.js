@@ -1,9 +1,10 @@
+import { VERSION_ONE_TEMPLATE } from "@/templates/version_one";
 import axios from "axios";
-// or import your headers from wherever it is stored
-const CLIENT_ID = "h1xgwhjvma1rvd46q2qwphbozrm58u";
-const CLIENT_SECRET = "eorcmduiaee82df9u8uhzfyuobczzb";
 
 export const useFetchDataService = () => {
+
+  const CLIENT_ID = "h1xgwhjvma1rvd46q2qwphbozrm58u";
+  const CLIENT_SECRET = "eorcmduiaee82df9u8uhzfyuobczzb";
   // get token
   const getAccessToken = async () => {
     let accessToken = null;
@@ -41,8 +42,26 @@ export const useFetchDataService = () => {
 
   const fetchGenres = async () => {
     const url = "https://api.igdb.com/v4/genres/";
+    // reduce query string to only 4
+    //(4, 5, 7, 8, 9, 12, 13, 14, 15, 24, 31, 33, 36)
+    /*
+        4 fighting
+        5 shooter
+        7 music
+        8 platform
+        9 puzzle
+        12 RPG
+        13 simulator
+        14 sport
+        15 stragety
+        24 tactical
+        31 adventure
+        33 arcade
+        36 MOBA
+     */
+    // reduce to 8
     const query =
-      "fields name; where id = (4, 5, 7, 8, 9, 12, 13, 14, 15, 24, 31, 33, 36); limit 13;";
+      "fields name; where id = (4, 5, 7, 8); limit 4;";
     try {
       return await callIGDB(url, query);
     } catch (err) {
@@ -93,6 +112,7 @@ export const useFetchDataService = () => {
       let sony = [];
       let pc = [];
       let microsoft = [];
+      let platformObjs; // the platform object being shaped
 
       // map the platforms to their respective arrays
       platforms.map((obj) => {
@@ -107,7 +127,7 @@ export const useFetchDataService = () => {
         }
       });
 
-      let platformObjs = [
+      platformObjs = [
         { name: "PC", id: 1 },
         { name: "Sony Consoles", id: 2 },
         { name: "Microsoft Consoles", id: 3 },
@@ -138,5 +158,50 @@ export const useFetchDataService = () => {
     //build the object based on each index of result
   };
 
-  return { buildGameObj };
-};
+  const populateQuestionOptions = (gameField, originalOps) => {
+  
+    let options = [];
+      
+      gameField.forEach((item, index) => {
+        let option = {
+          imgSrc: originalOps[index].imgSrc,
+          id: item.id,
+          name: item.name
+        }
+  
+        options.push(option);
+      })
+      return options;
+  
+  };
+
+  const getV1Template = async () => {
+  
+    const {genres, platforms, multiPlayers} = await buildGameObj();
+    // Deep clone using JSON
+    const v1 = JSON.parse(JSON.stringify(VERSION_ONE_TEMPLATE, null, 2));
+    // q5 is the retro game status; we need this only to build the rec list
+    const [questionOne, questionTwo, questionThree, questionFour, questionFive] = v1;
+
+    questionOne.options = populateQuestionOptions(platforms, questionOne.options);
+    questionTwo.options = populateQuestionOptions(genres, questionTwo.options);
+    questionThree.options = populateQuestionOptions(genres, questionThree.options);
+    questionFour.options = populateQuestionOptions(multiPlayers, questionFour.options);
+
+    return v1;
+  }
+
+  // (async () => await getV1Template())();
+
+   return { getV1Template };
+ };
+
+
+ /*
+    create decloned v1 template
+    function that will accept clone
+    call populateOptions on clone, overwrite options prop (name, id only)
+    clone will have all OG properties
+
+    return this clone to handler, client calls handler
+ */

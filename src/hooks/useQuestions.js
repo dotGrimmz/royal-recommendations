@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { questionsArr } from "@/data/questionObj";
+import { VERSION_ONE_TEMPLATE } from "@/templates/version_one";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-let testing = true;
+let testing = false;
 export const useQuestions = () => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -11,11 +11,17 @@ export const useQuestions = () => {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      if (testing) return setQuestions(questionsArr);
-      await axios
-        .get("/api/fetchData")
-        .then(setQuestions)
-        .catch((e) => console.error(e));
+      if (testing) return setQuestions(VERSION_ONE_TEMPLATE);
+      // await axios
+      //   .get("/api/fetchData")
+      //   .then(setQuestions)
+      //   .catch((e) => console.error(e));
+      try{
+        const data = await axios.get("/api/fetchData");
+        return setQuestions(data || []); // thought the issue could be that questions is not being defined
+      }catch(e) {
+        console.error(e);
+      }
     };
     fetchQuestions();
   }, []);
@@ -51,10 +57,13 @@ export const useQuestions = () => {
 
     const response = await axios.post("/api/buildRecList", submissionPayload);
 
-    console.log({ submissionPayload });
+    console.log( response.data );
   };
 
-  const testComplete = questions.every((q) => q.responseId !== "");
+  // can confirm questions is empty when calling api
+  //console.log("questions:" + questions);
+
+  //const testComplete = questions.every((q) => q.responseId !== "");
 
   return {
     questions,

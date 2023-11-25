@@ -1,25 +1,13 @@
 import { useFetchDataService } from "./services/fetchData.service";
 
 export default async function fetchData(req, res) {
-  const { buildGameObj } = useFetchDataService();
 
-<<<<<<< HEAD
-  const results = await buildGameObj();
-  //const result = [...results];
+  const { getV1Template } = useFetchDataService();
+  const results = await getV1Template();
 
-  // structure each promise as an object
-  // ex. genres in a genre obj
-  //console.log("results:" + result);
-  return res.status(200).json(results);
-=======
-    const results = await buildGameObj();
-    
-    // structure each promise as an object
-    // ex. genres in a genre obj
+  //   console.log(questions);
     return res.status(200).json(results);
->>>>>>> 38b11e67d0cfa62053a996cf2cd749913306f4f1
 }
-
 
 
 /*
