@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-let testing = true;
+let testing = false;
 export const useQuestions = () => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -63,7 +63,7 @@ export const useQuestions = () => {
   // can confirm questions is empty when calling api
   //console.log("questions:" + questions);
 
-  const testComplete = questions.every((q) => q.responseId !== "");
+  //const testComplete = questions.every((q) => q.responseId !== "");
 
   return {
     questions,
