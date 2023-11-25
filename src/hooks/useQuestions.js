@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-let testing = false;
+let testing = true;
 export const useQuestions = () => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -57,11 +57,11 @@ export const useQuestions = () => {
 
     const response = await axios.post("/api/buildRecList", submissionPayload);
 
-    console.log({ response });
+    console.log( response.data );
   };
 
   // can confirm questions is empty when calling api
-  console.log("questions:" + questions);
+  //console.log("questions:" + questions);
 
   const testComplete = questions.every((q) => q.responseId !== "");
 

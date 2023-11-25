@@ -4,7 +4,16 @@ export const useBuildRecListService = ({selectedResponseId}) => {
 
     // we don't need game names here
 
+    /*
+        For now selected response id is undefined for some reason.
+
+        Will probably have to modify this implementation a bit given that the selected response id is formed as:
+        {name: 'question param name', id: 'id of value chosen'}
+    */
+
 const buildGameRecList = async () => {
+
+    //console.log(selectedResponseId);
 
     const [platforms, genres, multiPlayers, retroGames] = selectedResponseId;
 
@@ -27,7 +36,7 @@ const buildGameRecList = async () => {
 
     let releaseDate = [];
     // user wants retro games
-    if (retroGames.id == 0) {
+    if (retroGames.id !== 0) {
         releaseDate.push("1980");
         releaseDate.push("1990");
     }
