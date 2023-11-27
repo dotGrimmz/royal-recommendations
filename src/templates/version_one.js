@@ -36,7 +36,8 @@ export const VERSION_ONE_TEMPLATE = [
     question: "Which of these genres do you like best?",
     imgSrc: "",
     options: [
-      { imgSrc: "", 
+      { 
+        imgSrc: "", 
         id: "", 
         name: "" 
       },
@@ -59,12 +60,13 @@ export const VERSION_ONE_TEMPLATE = [
 
   },
   {
-    name: "genres_two",
+    name: "genres_II",
     responseId: "",
     question: "Which of these genres do you like best out of these?",
     imgSrc: "",
     options: [
-      { imgSrc: "", 
+      { 
+        imgSrc: "", 
         id: "", 
         name: "" 
       },
@@ -84,7 +86,34 @@ export const VERSION_ONE_TEMPLATE = [
         name: "",
       },
     ]
-
+  },
+  {
+    name: "genres_III",
+    responseId: "",
+    question: "Which of these genres do you like best out of these?",
+    imgSrc: "",
+    options: [
+      { 
+        imgSrc: "", 
+        id: "", 
+        name: "" 
+      },
+      {
+        imgSrc: "",
+        id: "",
+        name: "",
+      },
+      {
+        imgSrc: "",
+        id: "",
+        name: "",
+      },
+      {
+        imgSrc: "",
+        id: "",
+        name: "",
+      },
+    ]
   },
   {
     name: "multiPlayers",
@@ -92,7 +121,8 @@ export const VERSION_ONE_TEMPLATE = [
     question: "Which play style do you prefer?",
     imgSrc: "",
     options: [
-      { imgSrc: "", 
+      { 
+        imgSrc: "", 
         id: "", 
         name: "" 
       },
@@ -109,7 +139,8 @@ export const VERSION_ONE_TEMPLATE = [
     question: "How do you feel about retro games?",
     imgSrc: "",
     options: [
-      { imgSrc: "", 
+      { 
+        imgSrc: "", 
         id: "", 
         name: "" 
       },

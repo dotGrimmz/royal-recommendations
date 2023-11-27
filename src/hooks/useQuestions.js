@@ -17,7 +17,7 @@ export const useQuestions = () => {
       //   .then(setQuestions)
       //   .catch((e) => console.error(e));
       try{
-        const data = await axios.get("/api/fetchData");
+        const data = await axios.get("/api/fillV1Template");
         return setQuestions(data || []); // thought the issue could be that questions is not being defined
       }catch(e) {
         console.error(e);

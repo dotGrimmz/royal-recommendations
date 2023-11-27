@@ -1,12 +1,13 @@
-import { useFetchDataService } from "./services/fetchData.service";
+import { useFillV1TemplateService } from "./services/fillV1Template.service";
 
 export default async function fetchData(req, res) {
 
-  const { getV1Template } = useFetchDataService();
+  const { getV1Template } = useFillV1TemplateService();
   const results = await getV1Template();
 
-  //   console.log(questions);
-    return res.status(200).json(results);
+  console.log(results);
+
+  return res.status(200).json(results);
 }
 
 

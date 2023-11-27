@@ -1,7 +1,7 @@
 import { VERSION_ONE_TEMPLATE } from "@/templates/version_one";
 import axios from "axios";
 
-export const useFetchDataService = () => {
+export const useFillV1TemplateService = () => {
 
   const CLIENT_ID = "h1xgwhjvma1rvd46q2qwphbozrm58u";
   const CLIENT_SECRET = "eorcmduiaee82df9u8uhzfyuobczzb";
@@ -26,7 +26,6 @@ export const useFetchDataService = () => {
   // make calls to API to gather necessary fields
   const callIGDB = async (url, query) => {
     const token = await getAccessToken();
-    let responseDestructured;
     if (token) {
       const tokenType = `Bearer ${token}`;
       const headers = {
@@ -35,8 +34,7 @@ export const useFetchDataService = () => {
         Authorization: tokenType,
       };
       const response = await axios.post(url, query, { headers: headers });
-      responseDestructured = [...response.data];
-      return responseDestructured;
+      return [...response.data];
     }
   };
 
@@ -45,23 +43,51 @@ export const useFetchDataService = () => {
     // reduce query string to only 4
     //(4, 5, 7, 8, 9, 12, 13, 14, 15, 24, 31, 33, 36)
     /*
-        4 fighting
-        5 shooter
-        7 music
-        8 platform
-        9 puzzle
-        12 RPG
-        13 simulator
-        14 sport
-        15 stragety
-        24 tactical
-        31 adventure
-        33 arcade
-        36 MOBA
+        4 fighting --
+        5 shooter --
+        7 music ------------ (not used)
+        8 platform --
+        9 puzzle --
+        12 RPG --
+        13 simulator --
+        14 sport --
+        15 stragety --
+        24 tactical --
+        31 adventure --
+        33 arcade --
+        36 MOBA --
+
+        (4, 8, 13, 15)
+        (36, 33, 14, 24)
+        (12, 9, 5, 31)
+
      */
-    // reduce to 8
+    // make second function with 4 different genre calls
     const query =
-      "fields name; where id = (4, 5, 7, 8); limit 4;";
+      "fields name; where id = (4, 8, 13, 15); limit 4;";
+    try {
+      return await callIGDB(url, query);
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  
+  const fetchGenres_II = async () => {
+    const url = "https://api.igdb.com/v4/genres/";
+    const query =
+      "fields name; where id = (36, 33, 14, 24); limit 4;";
+    try {
+      return await callIGDB(url, query);
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  const fetchGenres_III = async () => {
+    const url = "https://api.igdb.com/v4/genres/";
+    const query =
+      "fields name; where id = (12, 9, 5, 31); limit 4;";
     try {
       return await callIGDB(url, query);
     } catch (err) {
@@ -141,8 +167,10 @@ export const useFetchDataService = () => {
   };
 
   const buildGameObj = async () => {
-    const [genres, platforms, multiPlayers, ageRating] = await Promise.all([
+    const [genres, genres_II, genres_III, platforms, multiPlayers, ageRating] = await Promise.all([
       fetchGenres(),
+      fetchGenres_II(),
+      fetchGenres_III(),
       fetchPlatforms(),
       fetchMultiPlayerMode(),
       fetchAgeRatings(),
@@ -150,6 +178,8 @@ export const useFetchDataService = () => {
 
     return {
       genres: genres,
+      genres_II: genres_II,
+      genres_III: genres_III,
       platforms: platforms,
       multiPlayers: multiPlayers,
       ageRating: ageRating,
@@ -177,21 +207,27 @@ export const useFetchDataService = () => {
 
   const getV1Template = async () => {
   
-    const {genres, platforms, multiPlayers} = await buildGameObj();
+    const {genres, genres_II, genres_III, platforms, multiPlayers} = await buildGameObj();
     // Deep clone using JSON
     const v1 = JSON.parse(JSON.stringify(VERSION_ONE_TEMPLATE, null, 2));
-    // q5 is the retro game status; we need this only to build the rec list
+    // q6 is the retro game status; we need this only to build the rec list
     const [questionOne, questionTwo, questionThree, questionFour, questionFive] = v1;
 
     questionOne.options = populateQuestionOptions(platforms, questionOne.options);
     questionTwo.options = populateQuestionOptions(genres, questionTwo.options);
-    questionThree.options = populateQuestionOptions(genres, questionThree.options);
-    questionFour.options = populateQuestionOptions(multiPlayers, questionFour.options);
+    questionThree.options = populateQuestionOptions(genres_II, questionThree.options);
+    questionFour.options = populateQuestionOptions(genres_III, questionThree.options);
+    questionFive.options = populateQuestionOptions(multiPlayers, questionFour.options);
+
+    // just realized why this won't quite work
+    // v1.forEach( (question => {
+    //   question.options = populateQuestionOptions(, question.options)
+    // }))
 
     return v1;
   }
 
-  // (async () => await getV1Template())();
+  //(async () => await getV1Template())();
 
    return { getV1Template };
  };
@@ -205,3 +241,6 @@ export const useFetchDataService = () => {
 
     return this clone to handler, client calls handler
  */
+/*
+  
+*/

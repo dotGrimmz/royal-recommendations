@@ -1,4 +1,4 @@
-import { callIGDB } from "./fetchData.service";
+import { callIGDB } from "./fillV1Template.service";
 
 export const useBuildRecListService = ({selectedResponseId}) => {
 
