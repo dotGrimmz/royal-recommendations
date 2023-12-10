@@ -22,7 +22,7 @@ export const CardContainer = ({
       <div className="card-body gap-16">
         <h2 className="card-title mx-auto text-white text-3xl">{question}</h2>
         <div className={`grid grid-cols-2  gap-16`}>
-          {options?.map((data) => {
+          {options?.map((data, index) => {
             const { name, id, imgSrc: img } = data;
             console.log({ data });
             const isSelected = responseId === id;
@@ -35,7 +35,7 @@ export const CardContainer = ({
               : null;
             return (
               <ItemBtn
-                key={name}
+                key={index}
                 imgStyles={imgStyles}
                 handleClick={handleClick}
                 isSelected={isSelected}

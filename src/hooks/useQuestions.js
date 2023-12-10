@@ -1,4 +1,5 @@
 import { VERSION_ONE_TEMPLATE } from "@/templates/version_one";
+import { MOCK_RESP } from "@/templates/mock_response";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -7,6 +8,7 @@ let testing = false;
 export const useQuestions = () => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [recommendations, setRecommendations] = useState();
   const currentQuestion = questions?.[currentQuestionIndex];
 
   useEffect(() => {
@@ -16,10 +18,10 @@ export const useQuestions = () => {
       //   .get("/api/fetchData")
       //   .then(setQuestions)
       //   .catch((e) => console.error(e));
-      try{
+      try {
         const data = await axios.get("/api/fetchData");
-        return setQuestions(data || []); // thought the issue could be that questions is not being defined
-      }catch(e) {
+        return setQuestions(data.data || []); // thought the issue could be that questions is not being defined
+      } catch (e) {
         console.error(e);
       }
     };
@@ -48,6 +50,7 @@ export const useQuestions = () => {
   };
 
   const handleSubmit = async () => {
+    testing = true;
     const submissionPayload = questions.map((q) => {
       return {
         name: q.name,
@@ -55,9 +58,13 @@ export const useQuestions = () => {
       };
     });
 
-    const response = await axios.post("/api/buildRecList", submissionPayload);
+    // const response = await axios.post("/api/buildRecList", submissionPayload);
 
-    console.log( response.data );
+    console.log(submissionPayload, " post data");
+    if (testing) {
+      setTimeout(() => setRecommendations(MOCK_RESP), 2000);
+    }
+    console.log({ MOCK_RESP });
   };
 
   // can confirm questions is empty when calling api
@@ -72,5 +79,6 @@ export const useQuestions = () => {
     setCurrentQuestionIndex,
     handleNext,
     handleSubmit,
+    recommendations,
   };
 };
