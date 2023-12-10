@@ -1,16 +1,7 @@
 import { useState } from "react";
-import { axios } from "axios";
 export const Recommendations = ({ recommendations }) => {
-  console.log({ recommendations });
-
   const [selected, setSelected] = useState(0);
 
-  const testGameSite = async () => {
-    const res = await fetch(
-      "https://html5.gamedistribution.com/?search=fantasy"
-    );
-    if (res.ok) console.log({ res });
-  };
   return (
     <div className="grid pr-20 pl-20">
       {[...recommendations, ...recommendations, ...recommendations].map(
