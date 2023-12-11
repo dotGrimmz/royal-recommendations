@@ -50,21 +50,22 @@ export const useQuestions = () => {
   };
 
   const handleSubmit = async () => {
-    testing = true;
+    // testing = true;
     const submissionPayload = questions.map((q) => {
       return {
-        name: q.name,
+        topic: q.name,
         id: q.responseId,
+        response: q.options.find((item) => (item.id = q.responseId))?.name,
       };
     });
-
-    // const response = await axios.post("/api/buildRecList", submissionPayload);
 
     console.log(submissionPayload, " post data");
     if (testing) {
       setTimeout(() => setRecommendations(MOCK_RESP), 2000);
     }
-    console.log({ MOCK_RESP });
+    const response = await axios.post("/api/buildRecList", submissionPayload);
+
+    if (response.ok) console.log("resp 200 on the client");
   };
 
   // can confirm questions is empty when calling api

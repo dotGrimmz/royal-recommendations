@@ -16,9 +16,9 @@ export default function Home() {
     recommendations,
   } = useQuestions();
 
-  if (MOCK_RESP) {
-    return <Recommendations recommendations={MOCK_RESP} />;
-  }
+  // if (MOCK_RESP) {
+  //   return <Recommendations recommendations={MOCK_RESP} />;
+  // }
   return (
     <>
       <Questions
